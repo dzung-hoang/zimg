@@ -55,7 +55,7 @@ PathSpecifier translate_pathspec_format(const char *format)
 #define ORDER_YVU { 0, 2, 1 }
 #define ORDER_GBR { 1, 2, 0 }
 #define Z(x) zimg::PixelType::x
-	static const zimg::static_string_map<PathSpecifier, 30> map{
+	static const zimg::static_string_map<PathSpecifier, 31> map{
 		{ "bmp",   { Z(BYTE), 3, 0, 0, ORDER_NUL, false, PackingFormat::PACK_BMP } },
 		{ "grey",  { Z(BYTE), 1, 0, 0, ORDER_NUL, true } },
 		{ "yuy2",  { Z(BYTE), 3, 1, 0, ORDER_NUL, true,  PackingFormat::PACK_YUY2 } },
@@ -89,6 +89,7 @@ PathSpecifier translate_pathspec_format(const char *format)
 		{ "i422s", { Z(FLOAT), 3, 1, 0, ORDER_DEF, true } },
 		{ "i444s", { Z(FLOAT), 3, 0, 0, ORDER_DEF, true } },
 		{ "rgbps", { Z(FLOAT), 3, 0, 0, ORDER_DEF, false } },
+		{ "gbrps", { Z(FLOAT), 3, 0, 0, ORDER_GBR, false } },
 	};
 #undef ORDER_NUL
 #undef ORDER_DEF

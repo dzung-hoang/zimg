@@ -211,7 +211,7 @@ zimg::colorspace::MatrixCoefficients translate_matrix(zimg_matrix_coefficients_e
 {
 	using zimg::colorspace::MatrixCoefficients;
 
-	static const zimg::static_map<zimg_matrix_coefficients_e, zimg::colorspace::MatrixCoefficients, 8> map{
+	static const zimg::static_map<zimg_matrix_coefficients_e, zimg::colorspace::MatrixCoefficients, 9> map{
 		{ ZIMG_MATRIX_RGB,         MatrixCoefficients::RGB },
 		{ ZIMG_MATRIX_709,         MatrixCoefficients::REC_709 },
 		{ ZIMG_MATRIX_UNSPECIFIED, MatrixCoefficients::UNSPECIFIED },
@@ -220,6 +220,7 @@ zimg::colorspace::MatrixCoefficients translate_matrix(zimg_matrix_coefficients_e
 		{ ZIMG_MATRIX_YCGCO,       MatrixCoefficients::YCGCO },
 		{ ZIMG_MATRIX_2020_NCL,    MatrixCoefficients::REC_2020_NCL },
 		{ ZIMG_MATRIX_2020_CL,     MatrixCoefficients::REC_2020_CL },
+		{ ZIMG_MATRIX_ICTCP,       MatrixCoefficients::REC_2100_ICTCP },
 	};
 	return search_itu_enum_map(map, matrix, "unrecognized matrix coefficients");
 }
