@@ -130,7 +130,7 @@ std::vector<ColorspaceNode> get_neighboring_colorspaces(const ColorspaceDefiniti
 		}
 	} else if (csp.matrix == MatrixCoefficients::REC_2020_CL) {
 		edges.emplace_back(csp.to_rgb().to_linear(), create_2020_cl_yuv_to_rgb_operation);
-	} else if (csp.matrix == MatrixCoefficients::REC_2100_LMS && csp.primaries == ColorPrimaries::REC_2020) {
+	} else if (csp.matrix == MatrixCoefficients::REC_2100_LMS) {
 		// LMS with ST_2084 or ARIB_B67 transfer functions can be converted to ICtCp and also to linear transfer function
 		if (csp.transfer == TransferCharacteristics::ST_2084 || csp.transfer == TransferCharacteristics::ARIB_B67) {
 			edges.emplace_back(csp.to(MatrixCoefficients::REC_2100_ICTCP), create_lms_to_ictcp_operation);
@@ -142,7 +142,7 @@ std::vector<ColorspaceNode> get_neighboring_colorspaces(const ColorspaceDefiniti
 			edges.emplace_back(csp.to(TransferCharacteristics::ST_2084), std::bind(create_linear_to_gamma_operation, TransferCharacteristics::ST_2084, _1, _2));
 			edges.emplace_back(csp.to(TransferCharacteristics::ARIB_B67), std::bind(create_linear_to_gamma_operation, TransferCharacteristics::ARIB_B67, _1, _2));
                 }
-	} else if (csp.matrix == MatrixCoefficients::REC_2100_ICTCP && csp.primaries == ColorPrimaries::REC_2020) {
+	} else if (csp.matrix == MatrixCoefficients::REC_2100_ICTCP) {
 		// ICtCp with ST_2084 or ARIB_B67 transfer functions can be converted to LMS
 		if (csp.transfer == TransferCharacteristics::ST_2084 || csp.transfer == TransferCharacteristics::ARIB_B67)
 			edges.emplace_back(csp.to(MatrixCoefficients::REC_2100_LMS), create_ictcp_to_lms_operation);

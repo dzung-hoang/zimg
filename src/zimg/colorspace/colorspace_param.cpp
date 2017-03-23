@@ -146,12 +146,11 @@ Matrix3x3 ictcp_to_lms_matrix()
 
 Matrix3x3 lms_to_ictcp_matrix()
 {
-	return Matrix3x3(
-		{
+	return  {
 		  {              0.5,               0.5,             0.0 },
 		  {  6610.0 / 4096.0, -13613.0 / 4096.0, 7003.0 / 4096.0 },
 		  { 17933.0 / 4096.0, -17390.0 / 4096.0, -543.0 / 4096.0 }
-		} );
+		};
 }
 
 // http://www.brucelindbloom.com/Eqn_RGB_XYZ_Matrix.html
