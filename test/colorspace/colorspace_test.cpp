@@ -62,6 +62,26 @@ TEST(ColorspaceConversionTest, test_matrix_only)
 			"46aa18f98fa9ffed9bea83817a76cacaf28ed062",
 			"510cff5b3f97e26874cec2b8a986d0a205742b2a"
 		},
+		{
+			"4c9e950cdf958e649dca0f17d8e1f05e39871add",
+			"f82c0d455909e554b0bfc533d4906940101f1c36",
+			"3ee3ffef32ca48ed5e72b4d1e5733d2908ea5b12"
+		},
+		{
+			"4cef2f8583ba0d1a9ed07dac8125a0d4749f43af",
+			"83e503276841f3cb51f14f816d1876f292cfb9e1",
+			"58939273307384ee8c3f55e59cb7f366f4e7ed8c"
+		},
+		{
+			"f61d09d2437f85158dd19ab7f86647775f6a8e0f",
+			"da725a4aeb2f49019b73245e5cceca33072dedcb",
+			"0858ff2cfa67b8754dfa2816b6e38015330e4ed1"
+		},
+		{
+			"b38db31673de42d45326b019dda18ce9e984545b",
+			"46f1ec898b101074a054c345004d5ed9ed9c6484",
+			"f7dcc5ed3807b40b5446049ffdaec28413d1743e"
+		},
 	};
 
 	test_case({ MatrixCoefficients::RGB, TransferCharacteristics::UNSPECIFIED, ColorPrimaries::UNSPECIFIED },
@@ -73,6 +93,18 @@ TEST(ColorspaceConversionTest, test_matrix_only)
 	test_case({ MatrixCoefficients::REC_601, TransferCharacteristics::UNSPECIFIED, ColorPrimaries::UNSPECIFIED },
 	          { MatrixCoefficients::REC_709, TransferCharacteristics::UNSPECIFIED, ColorPrimaries::UNSPECIFIED },
 	          expected_sha1[2]);
+	test_case({ MatrixCoefficients::RGB, TransferCharacteristics::LINEAR, ColorPrimaries::REC_2020 },
+	          { MatrixCoefficients::REC_2100_LMS, TransferCharacteristics::LINEAR, ColorPrimaries::REC_2020 },
+	          expected_sha1[3]);
+	test_case({ MatrixCoefficients::REC_2100_LMS, TransferCharacteristics::ST_2084, ColorPrimaries::REC_2020 },
+	          { MatrixCoefficients::REC_2100_ICTCP, TransferCharacteristics::ST_2084, ColorPrimaries::REC_2020 },
+		  expected_sha1[4]);
+	test_case({ MatrixCoefficients::REC_2100_ICTCP, TransferCharacteristics::ST_2084, ColorPrimaries::REC_2020 },
+	          { MatrixCoefficients::REC_2100_LMS, TransferCharacteristics::ST_2084, ColorPrimaries::REC_2020 },
+		  expected_sha1[5]);
+	test_case({ MatrixCoefficients::REC_2100_LMS, TransferCharacteristics::LINEAR, ColorPrimaries::REC_2020 },
+	          { MatrixCoefficients::RGB, TransferCharacteristics::LINEAR, ColorPrimaries::REC_2020 },
+		  expected_sha1[6]);
 }
 
 TEST(ColorspaceConversionTest, test_transfer_only)
@@ -84,7 +116,7 @@ TEST(ColorspaceConversionTest, test_transfer_only)
 	ColorspaceDefinition csp_st2084{ MatrixCoefficients::RGB, TransferCharacteristics::ST_2084, ColorPrimaries::UNSPECIFIED };
 	ColorspaceDefinition csp_arib_b67{ MatrixCoefficients::RGB, TransferCharacteristics::ARIB_B67, ColorPrimaries::UNSPECIFIED };
 
-	const char *expected_sha1[][6] = {
+	const char *expected_sha1[][3] = {
 		{
 			"b606c8645f868f1e763b3e6a88b16bd004db998a",
 			"1020e7d1b081bde7ca05ba61656811aeead95f01",
@@ -140,15 +172,49 @@ TEST(ColorspaceConversionTest, test_matrix_transfer)
 {
 	using namespace zimg::colorspace;
 
-	const char *expected_sha1[3] = {
-		"55cce8cf81b5cb0fd6c88744ee3f8bd76ea1928d",
-		"b707cf6b81449aa34165a47aa4dc9e3bee784bdd",
-		"508318c1837019b91880df83cb7f9d110548e30b"
+	const char *expected_sha1[][3] = {
+		{
+			"55cce8cf81b5cb0fd6c88744ee3f8bd76ea1928d",
+			"b707cf6b81449aa34165a47aa4dc9e3bee784bdd",
+			"508318c1837019b91880df83cb7f9d110548e30b"
+		},
+		{
+			"683b41dcef47cd020e2dadf9f5e149769fcc80ff",
+			"2523d842508d8332cdc46984e1a144b94c29bdb3",
+			"ccb32c84ad13f87eb0c53927690c8d9a33d046fd"
+		},
+		{
+			"2d59753ba28bfe458841ef135b5a3e9c3f4eaa8a",
+			"4a141fab23c2b427fe3d11dcd53d0576180b16ef",
+			"51ec7fe875c09400577b3b8ae9ac383504751183"
+		},
+		{
+			"935fc4cab59118b382a925464bf61e8d04df3b15",
+			"3513e233d321b3620bd2c9121643cce7293a029a",
+			"2e4c4ac369cb50618e5501c64aa69ed4bad259a5"
+		},
+		{
+			"fc37fb0136ef19c42e603a6bcea420029c0900f2",
+			"645754227f593b42f1a7bd3fe3df20bfa4e6bfc3",
+			"bd9b5a9511a35dd633d8f8fde8e7da79fe717847"
+		},
 	};
 
 	test_case({ MatrixCoefficients::REC_709, TransferCharacteristics::LINEAR, ColorPrimaries::UNSPECIFIED },
 	          { MatrixCoefficients::REC_601, TransferCharacteristics::REC_709, ColorPrimaries::UNSPECIFIED },
-	          expected_sha1);
+	          expected_sha1[0]);
+	test_case({ MatrixCoefficients::RGB, TransferCharacteristics::LINEAR, ColorPrimaries::REC_2020 },
+	          { MatrixCoefficients::REC_2100_ICTCP, TransferCharacteristics::ST_2084, ColorPrimaries::REC_2020 },
+	          expected_sha1[1]);
+	test_case({ MatrixCoefficients::RGB, TransferCharacteristics::LINEAR, ColorPrimaries::REC_2020 },
+	          { MatrixCoefficients::REC_2100_ICTCP, TransferCharacteristics::ARIB_B67, ColorPrimaries::REC_2020 },
+	          expected_sha1[2]);
+	test_case({ MatrixCoefficients::REC_2100_ICTCP, TransferCharacteristics::ST_2084, ColorPrimaries::REC_2020 },
+	          { MatrixCoefficients::RGB, TransferCharacteristics::LINEAR, ColorPrimaries::REC_2020 },
+		  expected_sha1[3]);
+	test_case({ MatrixCoefficients::REC_2100_ICTCP, TransferCharacteristics::ARIB_B67, ColorPrimaries::REC_2020 },
+	          { MatrixCoefficients::RGB, TransferCharacteristics::LINEAR, ColorPrimaries::REC_2020 },
+	          expected_sha1[4]);
 }
 
 TEST(ColorspaceConversionTest, test_matrix_transfer_primaries)
@@ -170,7 +236,7 @@ TEST(ColorspaceConversionTest, test_matrix_transfer_primaries)
 			"9196061dd36c8455a10b68767f8baad59280ef1b",
 			"14f947d077d545930765b457e767da2852186180",
 			"0894c577a74198718602d4fd7449d2f3ce5ecf28"
-		}
+		},
 	};
 
 	SCOPED_TRACE("709->smpte_c");
